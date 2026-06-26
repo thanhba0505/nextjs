@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Locale } from "@/constants/locales";
@@ -11,7 +11,11 @@ import { getClientLocale, setClientLocale } from "@/lib/locale";
 import { useAuthStore } from "@/store/auth.store";
 import { useModalStore } from "@/store/modal.store";
 
-function setLocaleInUrl(pathname: string, searchParams: URLSearchParams, locale: Locale) {
+function setLocaleInUrl(
+  pathname: string,
+  searchParams: URLSearchParams,
+  locale: Locale,
+) {
   const next = new URLSearchParams(searchParams);
   next.set("locale", locale);
   return `${pathname}?${next.toString()}`;
@@ -20,7 +24,6 @@ function setLocaleInUrl(pathname: string, searchParams: URLSearchParams, locale:
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const logout = useAuthStore((s) => s.logout);
   const openModal = useModalStore((s) => s.openModal);
@@ -28,7 +31,11 @@ export function Header() {
 
   const onChangeLocale = (value: Locale) => {
     setClientLocale(value);
-    const url = setLocaleInUrl(pathname, new URLSearchParams(searchParams.toString()), value);
+    const url = setLocaleInUrl(
+      pathname,
+      new URLSearchParams(window.location.search),
+      value,
+    );
     router.replace(url);
     router.refresh();
   };
