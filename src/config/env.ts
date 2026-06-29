@@ -1,12 +1,11 @@
 import { API_BASE_PATH } from "@/constants/api";
 
-function readPublicEnv(name: string): string | undefined {
-  const value = process.env[name];
-  if (typeof value === "string" && value.length > 0) return value;
-  return undefined;
-}
+const publicApiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const env = {
-  apiUrl: readPublicEnv("NEXT_PUBLIC_API_URL") ?? "http://localhost:3000",
+  apiUrl:
+    typeof publicApiUrl === "string" && publicApiUrl.length > 0
+      ? publicApiUrl
+      : "http://localhost:3000",
   apiBasePath: API_BASE_PATH,
 } as const;
