@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { LogIn, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Locale } from "@/constants/locales";
-import { LOCALES } from "@/constants/locales";
+import { DEFAULT_LOCALE, LOCALES } from "@/constants/locales";
 import { cn } from "@/lib/cn";
 import { getClientLocale, setClientLocale } from "@/lib/locale";
 import { useAuthStore } from "@/store/auth.store";
@@ -27,10 +28,17 @@ export function Header() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const logout = useAuthStore((s) => s.logout);
   const openModal = useModalStore((s) => s.openModal);
-  const locale = getClientLocale();
+  const [locale, setLocale] = useState<Locale>(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    const nextLocale = getClientLocale();
+    const id = window.setTimeout(() => setLocale(nextLocale), 0);
+    return () => window.clearTimeout(id);
+  }, []);
 
   const onChangeLocale = (value: Locale) => {
     setClientLocale(value);
+    setLocale(value);
     const url = setLocaleInUrl(
       pathname,
       new URLSearchParams(window.location.search),

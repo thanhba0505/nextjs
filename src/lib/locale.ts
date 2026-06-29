@@ -19,7 +19,10 @@ export function getClientLocale(): Locale {
     if (fromQuery) return fromQuery;
   }
 
-  const fromCookie = Cookies.get(COOKIE_KEYS.locale);
+  const fromCookie =
+    typeof document !== "undefined"
+      ? Cookies.get(COOKIE_KEYS.locale)
+      : undefined;
   if (typeof fromCookie === "string" && isLocale(fromCookie)) return fromCookie;
 
   return DEFAULT_LOCALE;
