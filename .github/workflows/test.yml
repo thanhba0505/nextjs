@@ -1,0 +1,13 @@
+name: Ping Render TEST
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: date
