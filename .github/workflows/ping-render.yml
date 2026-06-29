@@ -1,0 +1,42 @@
+name: Ping Render
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    concurrency:
+      group: ping-render
+      cancel-in-progress: true
+    steps:
+      - name: Ping health endpoint
+        env:
+          HEALTH_URL: https://nextjs-uji3.onrender.com/health
+        run: |
+          set -euo pipefail
+
+          echo "Pinging: ${HEALTH_URL}"
+          body="$(curl -fsSL --max-time 20 --retry 3 --retry-all-errors "${HEALTH_URL}")"
+          echo "${body}"
+
+          python3 - <<'PY' <<<"${body}"
+          import json, os, sys
+          body = sys.stdin.read().strip()
+          try:
+            data = json.loads(body)
+          except Exception as e:
+            raise SystemExit(f"Invalid JSON response: {e}")
+
+          if data.get("status") != "ok":
+            raise SystemExit(f"Unexpected status: {data.get('status')!r}")
+
+          ts = data.get("timestamp")
+          if not isinstance(ts, str) or "T" not in ts:
+            raise SystemExit(f"Invalid timestamp: {ts!r}")
+
+          print("Health check OK")
+          PY
