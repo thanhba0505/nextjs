@@ -20,6 +20,12 @@
       "signIn": "Sign in",
       "signOut": "Sign out"
     },
+    "toast": {
+      "loginSuccess": "Signed in successfully",
+      "loginFailed": "Sign in failed",
+      "logoutSuccess": "Signed out",
+      "logoutFailed": "Sign out failed"
+    },
     "login": {
       "title": "Sign in",
       "emailLabel": "Email",

@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,11 +42,13 @@ export function LoginForm() {
     setErrorMessage(null);
     try {
       await login(values);
+      toast.success(tAuth("toast.loginSuccess"));
       closeModal();
     } catch (error) {
       if (error instanceof Error) setErrorMessage(error.message);
       else if (typeof error === "string") setErrorMessage(error);
       else setErrorMessage(tAuth("login.failed"));
+      toast.error(tAuth("toast.loginFailed"));
     }
   };
 

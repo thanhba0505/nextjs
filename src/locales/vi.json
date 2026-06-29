@@ -20,6 +20,12 @@
       "signIn": "Đăng nhập",
       "signOut": "Đăng xuất"
     },
+    "toast": {
+      "loginSuccess": "Đăng nhập thành công",
+      "loginFailed": "Đăng nhập thất bại",
+      "logoutSuccess": "Đã đăng xuất",
+      "logoutFailed": "Đăng xuất thất bại"
+    },
     "login": {
       "title": "Đăng nhập",
       "emailLabel": "Email",

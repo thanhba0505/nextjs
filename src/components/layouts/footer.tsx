@@ -3,6 +3,7 @@
 import { Check, LogIn, LogOut, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -91,8 +92,13 @@ export function Footer() {
               ) : (
                 <DropdownMenuItem
                   disabled={loading}
-                  onSelect={() => {
-                    void logout();
+                  onSelect={async () => {
+                    try {
+                      await logout();
+                      toast.success(tAuth("toast.logoutSuccess"));
+                    } catch {
+                      toast.error(tAuth("toast.logoutFailed"));
+                    }
                   }}
                 >
                   <LogOut className="h-4 w-4" />
