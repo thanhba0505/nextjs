@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Locale } from "@/constants/locales";
-import { FOOTER_HEIGHT_PX } from "@/constants/layout";
+import { FOOTER_HEIGHT_PX, MAIN_LAYOUT_PADDING_X_PX } from "@/constants/layout";
 import { setClientLocale } from "@/lib/locale";
 import { useAuthStore } from "@/store/auth.store";
 import { useLocaleStore } from "@/store/locale.store";
@@ -45,8 +45,11 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-border bg-background/80 backdrop-blur">
       <div
-        className="flex w-full items-center justify-between gap-4 px-6 text-xs text-muted-foreground"
-        style={{ height: `${FOOTER_HEIGHT_PX}px` }}
+        className="flex w-full items-center justify-between gap-4 text-xs text-muted-foreground"
+        style={{
+          height: `${FOOTER_HEIGHT_PX}px`,
+          padding: `0 ${MAIN_LAYOUT_PADDING_X_PX}px`,
+        }}
       >
         <div className="flex items-center gap-3">
           <DropdownMenu>

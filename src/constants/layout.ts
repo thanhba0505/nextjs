@@ -1,2 +1,6 @@
 export const FOOTER_HEIGHT_PX = 48;
 export const TOASTER_BOTTOM_OFFSET_PX = FOOTER_HEIGHT_PX + 24;
+
+export const MAIN_LAYOUT_PADDING_X_PX = 24;
+export const MAIN_LAYOUT_PADDING_Y_PX = 12;
+export const FOOTER_LAYOUT_PADDING_X_PX = 24;
