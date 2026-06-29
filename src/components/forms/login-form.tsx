@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,24 +9,22 @@ import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/auth.store";
 import { useModalStore } from "@/store/modal.store";
 
-const loginSchema = z.object({
-  email: z.string().email("Email không hợp lệ"),
-  password: z.string().min(1, "Vui lòng nhập mật khẩu"),
-});
-
-type LoginFormValues = z.infer<typeof loginSchema>;
-
-function getErrorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
-  if (typeof error === "string") return error;
-  return "Đăng nhập thất bại";
-}
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 export function LoginForm() {
+  const tAuth = useTranslations("auth");
   const login = useAuthStore((s) => s.login);
   const loading = useAuthStore((s) => s.loading);
   const closeModal = useModalStore((s) => s.closeModal);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const loginSchema = z.object({
+    email: z.string().email(tAuth("login.emailInvalid")),
+    password: z.string().min(1, tAuth("login.passwordRequired")),
+  });
 
   const {
     register,
@@ -42,14 +41,18 @@ export function LoginForm() {
       await login(values);
       closeModal();
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      if (error instanceof Error) setErrorMessage(error.message);
+      else if (typeof error === "string") setErrorMessage(error);
+      else setErrorMessage(tAuth("login.failed"));
     }
   };
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-1">
-        <label className="text-sm font-medium">Email</label>
+        <label className="text-sm font-medium">
+          {tAuth("login.emailLabel")}
+        </label>
         <input
           type="email"
           className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/20"
@@ -61,7 +64,9 @@ export function LoginForm() {
       </div>
 
       <div className="space-y-1">
-        <label className="text-sm font-medium">Mật khẩu</label>
+        <label className="text-sm font-medium">
+          {tAuth("login.passwordLabel")}
+        </label>
         <input
           type="password"
           className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/20"
@@ -81,7 +86,9 @@ export function LoginForm() {
         type="submit"
         disabled={loading || isSubmitting}
       >
-        {loading || isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
+        {loading || isSubmitting
+          ? tAuth("login.submitting")
+          : tAuth("login.submit")}
       </Button>
     </form>
   );

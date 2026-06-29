@@ -8,11 +8,13 @@ export function Modal({
   title,
   children,
   onClose,
+  closeLabel,
 }: {
   open: boolean;
   title: string;
   children: React.ReactNode;
   onClose: () => void;
+  closeLabel: string;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -29,7 +31,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
       <button
         type="button"
-        aria-label="Close modal"
+        aria-label={closeLabel}
         className="absolute inset-0 bg-black/50"
         onClick={onClose}
       />
@@ -48,7 +50,7 @@ export function Modal({
             className="rounded-md px-2 py-1 text-sm hover:bg-zinc-100"
             onClick={onClose}
           >
-            Đóng
+            {closeLabel}
           </button>
         </div>
         <div className="mt-4">{children}</div>

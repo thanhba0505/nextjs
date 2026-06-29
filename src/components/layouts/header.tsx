@@ -1,96 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { LogIn, LogOut } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import type { Locale } from "@/constants/locales";
-import { DEFAULT_LOCALE, LOCALES } from "@/constants/locales";
-import { cn } from "@/lib/utils";
-import { getClientLocale, setClientLocale } from "@/lib/locale";
-import { useAuthStore } from "@/store/auth.store";
-import { useModalStore } from "@/store/modal.store";
-
-function setLocaleInUrl(
-  pathname: string,
-  searchParams: URLSearchParams,
-  locale: Locale,
-) {
-  const next = new URLSearchParams(searchParams);
-  next.set("locale", locale);
-  return `${pathname}?${next.toString()}`;
-}
+import { useTranslations } from "next-intl";
 
 export function Header() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-  const logout = useAuthStore((s) => s.logout);
-  const openModal = useModalStore((s) => s.openModal);
-  const [locale, setLocale] = useState<Locale>(DEFAULT_LOCALE);
-
-  useEffect(() => {
-    const nextLocale = getClientLocale();
-    const id = window.setTimeout(() => setLocale(nextLocale), 0);
-    return () => window.clearTimeout(id);
-  }, []);
-
-  const onChangeLocale = (value: Locale) => {
-    setClientLocale(value);
-    setLocale(value);
-    const url = setLocaleInUrl(
-      pathname,
-      new URLSearchParams(window.location.search),
-      value,
-    );
-    router.replace(url);
-    router.refresh();
-  };
+  const tCommon = useTranslations("common");
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-zinc-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-4">
+    <header className="w-full border-b border-border bg-background/80 backdrop-blur">
+      <div className="flex h-14 w-full items-center justify-between px-6">
         <Link className="text-sm font-semibold tracking-tight" href="/">
-          Next Frontend
+          {tCommon("title")}
         </Link>
-
-        <div className="flex items-center gap-2">
-          <div className="flex items-center rounded-md border border-zinc-200 bg-white">
-            {LOCALES.map((l) => (
-              <button
-                key={l}
-                type="button"
-                className={cn(
-                  "px-2 py-1 text-xs font-medium",
-                  l === locale
-                    ? "bg-zinc-900 text-white"
-                    : "text-zinc-700 hover:bg-zinc-100",
-                )}
-                onClick={() => onChangeLocale(l)}
-              >
-                {l.toUpperCase()}
-              </button>
-            ))}
-          </div>
-
-          {!isAuthenticated ? (
-            <Button variant="secondary" onClick={() => openModal("login")}>
-              <LogIn className="h-4 w-4" />
-              Login
-            </Button>
-          ) : (
-            <Button
-              variant="secondary"
-              onClick={() => {
-                void logout();
-              }}
-            >
-              <LogOut className="h-4 w-4" />
-              Logout
-            </Button>
-          )}
-        </div>
       </div>
     </header>
   );

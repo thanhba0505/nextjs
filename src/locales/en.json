@@ -1,5 +1,44 @@
 {
   "common": {
-    "title": "Next Frontend"
+    "title": "Next Frontend",
+    "close": "Close"
+  },
+  "layout": {
+    "footer": {
+      "copyright": "© {year} {appName}",
+      "placeholder": "Footer placeholder"
+    }
+  },
+  "auth": {
+    "menu": {
+      "triggerLabel": "Account",
+      "languageLabel": "Language",
+      "localeVi": "Vietnamese",
+      "localeEn": "English",
+      "signedOutTitle": "Not signed in",
+      "signedOutDescription": "Sign in to access account features.",
+      "signIn": "Sign in",
+      "signOut": "Sign out"
+    },
+    "login": {
+      "title": "Sign in",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "emailInvalid": "Invalid email",
+      "passwordRequired": "Password is required",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "failed": "Sign in failed"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Home",
+      "description": "This project is ready to build on. Use the footer button to sign in."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Protected placeholder page. CRUD/business pages are not implemented yet."
+    }
   }
 }

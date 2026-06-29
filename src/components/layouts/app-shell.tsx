@@ -6,9 +6,9 @@ import { ModalRoot } from "@/components/modal/modal-root";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 pt-14 pb-12">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
       <ModalRoot />
     </div>

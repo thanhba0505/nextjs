@@ -2,7 +2,12 @@ import { create } from "zustand";
 import { AuthService } from "@/services/auth.service";
 import type { LoginRequest } from "@/types/auth";
 import type { Permission, Role, User } from "@/types/user";
-import { clearAuthCookies, getRefreshToken, setAccessToken, setRefreshToken } from "@/utils/tokens";
+import {
+  clearAuthCookies,
+  getRefreshToken,
+  setAccessToken,
+  setRefreshToken,
+} from "@/utils/tokens";
 
 interface AuthState {
   user: User | null;
@@ -13,7 +18,11 @@ interface AuthState {
   login: (payload: LoginRequest) => Promise<void>;
   logout: () => Promise<void>;
   fetchMe: () => Promise<void>;
-  setUser: (payload: { user: User; roles: Role[]; permissions: Permission[] }) => void;
+  setUser: (payload: {
+    user: User;
+    roles: Role[];
+    permissions: Permission[];
+  }) => void;
   clear: () => void;
 }
 
@@ -46,8 +55,13 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       const res = await AuthService.me();
       if (!res.success) throw new Error(res.message);
-      const { roles, permissions, ...user } = res.data;
-      get().setUser({ user, roles, permissions });
+      const currentUser = res.data.user;
+      const { roles, permissions, ...user } = currentUser;
+      get().setUser({
+        user,
+        roles: roles ?? [],
+        permissions: permissions ?? [],
+      });
     } finally {
       set({ loading: false });
     }

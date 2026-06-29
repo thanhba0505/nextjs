@@ -1,5 +1,44 @@
 {
   "common": {
-    "title": "Next Frontend"
+    "title": "Next Frontend",
+    "close": "Đóng"
+  },
+  "layout": {
+    "footer": {
+      "copyright": "© {year} {appName}",
+      "placeholder": "Chân trang"
+    }
+  },
+  "auth": {
+    "menu": {
+      "triggerLabel": "Tài khoản",
+      "languageLabel": "Ngôn ngữ",
+      "localeVi": "Tiếng Việt",
+      "localeEn": "English",
+      "signedOutTitle": "Chưa đăng nhập",
+      "signedOutDescription": "Đăng nhập để sử dụng các tính năng yêu cầu tài khoản.",
+      "signIn": "Đăng nhập",
+      "signOut": "Đăng xuất"
+    },
+    "login": {
+      "title": "Đăng nhập",
+      "emailLabel": "Email",
+      "passwordLabel": "Mật khẩu",
+      "emailInvalid": "Email không hợp lệ",
+      "passwordRequired": "Vui lòng nhập mật khẩu",
+      "submit": "Đăng nhập",
+      "submitting": "Đang đăng nhập...",
+      "failed": "Đăng nhập thất bại"
+    }
+  },
+  "pages": {
+    "home": {
+      "title": "Guest Home",
+      "description": "Dự án đã sẵn sàng để phát triển. Đăng nhập bằng nút ở footer để bắt đầu."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Đây là trang protected placeholder. Chưa triển khai CRUD hay business pages."
+    }
   }
 }
