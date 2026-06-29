@@ -52,17 +52,19 @@ export function LoginForm() {
         <label className="text-sm font-medium">Email</label>
         <input
           type="email"
-          className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/20 dark:border-zinc-800 dark:bg-zinc-950"
+          className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/20"
           {...register("email")}
         />
-        {errors.email ? <p className="text-sm text-red-600">{errors.email.message}</p> : null}
+        {errors.email ? (
+          <p className="text-sm text-red-600">{errors.email.message}</p>
+        ) : null}
       </div>
 
       <div className="space-y-1">
         <label className="text-sm font-medium">Mật khẩu</label>
         <input
           type="password"
-          className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/20 dark:border-zinc-800 dark:bg-zinc-950"
+          className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/20"
           {...register("password")}
         />
         {errors.password ? (
@@ -70,9 +72,15 @@ export function LoginForm() {
         ) : null}
       </div>
 
-      {errorMessage ? <p className="text-sm text-red-600">{errorMessage}</p> : null}
+      {errorMessage ? (
+        <p className="text-sm text-red-600">{errorMessage}</p>
+      ) : null}
 
-      <Button className="w-full" type="submit" disabled={loading || isSubmitting}>
+      <Button
+        className="w-full"
+        type="submit"
+        disabled={loading || isSubmitting}
+      >
         {loading || isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
       </Button>
     </form>

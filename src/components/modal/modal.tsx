@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 export function Modal({
   open,
@@ -35,7 +35,7 @@ export function Modal({
       />
       <div
         className={cn(
-          "relative w-full max-w-md rounded-lg border border-zinc-200 bg-white p-4 shadow-xl dark:border-zinc-800 dark:bg-zinc-950",
+          "relative w-full max-w-md rounded-lg border border-zinc-200 bg-white p-4 shadow-xl",
         )}
         role="dialog"
         aria-modal="true"
@@ -45,7 +45,7 @@ export function Modal({
           <h2 className="text-base font-semibold">{title}</h2>
           <button
             type="button"
-            className="rounded-md px-2 py-1 text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            className="rounded-md px-2 py-1 text-sm hover:bg-zinc-100"
             onClick={onClose}
           >
             Đóng
