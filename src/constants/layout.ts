@@ -1,0 +1,2 @@
+export const FOOTER_HEIGHT_PX = 48;
+export const TOASTER_BOTTOM_OFFSET_PX = FOOTER_HEIGHT_PX + 24;
