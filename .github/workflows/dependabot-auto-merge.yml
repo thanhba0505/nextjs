@@ -1,0 +1,112 @@
+name: Dependabot Auto Merge
+
+on:
+  pull_request:
+    types:
+      - labeled
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  pull_request_review:
+    types:
+      - submitted
+  check_suite:
+    types:
+      - completed
+  status: {}
+
+jobs:
+  dependabot-auto-merge:
+    runs-on: ubuntu-latest
+
+    # Chỉ chạy cho các pull request từ dependabot
+    if: |
+      github.actor == 'dependabot[bot]' || 
+      github.actor == 'dependabot-preview[bot]' ||
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      github.event.pull_request.user.login == 'dependabot-preview[bot]'
+
+    permissions:
+      pull-requests: write
+      contents: write
+      checks: read
+
+    steps:
+      - name: Auto-merge Dependabot PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            // Kiểm tra nếu PR đã được merge hoặc đóng
+            if (pr.merged || pr.state !== 'open') {
+              console.log('PR đã được merge hoặc đóng');
+              return;
+            }
+
+            // Kiểm tra nếu có conflict
+            if (pr.mergeable_state === 'dirty' || pr.mergeable === false) {
+              console.log('PR có conflict, không thể merge');
+              return;
+            }
+
+            // Kiểm tra các required checks đã pass
+            const { data: checks } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+
+            // Kiểm tra commit status
+            const { data: status } = await github.rest.repos.getCombinedStatusForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+
+            // Xác định tất cả checks đã thành công
+            const allChecksPassed = checks.check_runs.every(check => 
+              check.conclusion === 'success' || check.status === 'completed'
+            ) && status.state === 'success';
+
+            if (!allChecksPassed) {
+              console.log('Chưa tất cả checks đều pass');
+              return;
+            }
+
+            // Kiểm tra nếu đã có review approval
+            const { data: reviews } = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            const hasApproval = reviews.some(review => 
+              review.state === 'APPROVED'
+            );
+
+            // Nếu cần approval nhưng chưa có thì không merge
+            if (!hasApproval) {
+              console.log('Chưa có review approval');
+              return;
+            }
+
+            // Merge PR với squash merge (giữ commit history gọn)
+            try {
+              await github.rest.pulls.merge({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                merge_method: 'squash',
+                commit_title: `Bump ${pr.title.split(':')[0]?.trim() || 'dependencies'}`,
+                commit_message: `Auto-merged via GitHub Actions\n\n${pr.body || ''}`
+              });
+              console.log('✅ Đã auto-merge PR thành công');
+            } catch (error) {
+              console.error('❌ Lỗi khi merge:', error.message);
+            }
