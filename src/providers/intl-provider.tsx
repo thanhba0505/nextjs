@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { useMemo } from "react";
 import enMessages from "@/locales/en.json";
 import viMessages from "@/locales/vi.json";
-import type { Locale } from "@/constants/locales";
+import { DEFAULT_TIME_ZONE, type Locale } from "@/constants/locales";
 
 export function IntlProvider({
   children,
@@ -19,7 +19,11 @@ export function IntlProvider({
   );
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <NextIntlClientProvider
+      locale={locale}
+      messages={messages}
+      timeZone={DEFAULT_TIME_ZONE}
+    >
       {children}
     </NextIntlClientProvider>
   );

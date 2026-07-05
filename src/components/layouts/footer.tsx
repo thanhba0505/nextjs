@@ -1,9 +1,11 @@
 "use client";
 
-import { Check, LogIn, LogOut, User } from "lucide-react";
+import { Check, Clock3, LogIn, LogOut, User } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { TaskbarAppList } from "@/components/taskbar/taskbar-app-list";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -14,16 +16,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Locale } from "@/constants/locales";
-import { FOOTER_HEIGHT_PX, MAIN_LAYOUT_PADDING_X_PX } from "@/constants/layout";
+import {
+  FOOTER_HEIGHT_PX,
+  FOOTER_LAYOUT_PADDING_X_PX,
+} from "@/constants/layout";
 import { setClientLocale } from "@/lib/locale";
 import { useAuthStore } from "@/store/auth.store";
 import { useLocaleStore } from "@/store/locale.store";
 import { useModalStore } from "@/store/modal.store";
 
 export function Footer() {
-  const tCommon = useTranslations("common");
-  const tLayout = useTranslations("layout");
   const tAuth = useTranslations("auth");
+  const tWorkspace = useTranslations("workspace");
 
   const router = useRouter();
 
@@ -35,6 +39,26 @@ export function Footer() {
 
   const currentLocale = useLocaleStore((s) => s.locale);
   const setLocale = useLocaleStore((s) => s.setLocale);
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  const timeFormatter = useMemo(
+    () =>
+      new Intl.DateTimeFormat(currentLocale, {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    [currentLocale],
+  );
 
   const onChangeLocale = (locale: Locale) => {
     setClientLocale(locale);
@@ -45,13 +69,13 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-border bg-background/80 backdrop-blur">
       <div
-        className="flex w-full items-center justify-between gap-4 text-xs text-muted-foreground"
+        className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-4 text-xs text-muted-foreground"
         style={{
           height: `${FOOTER_HEIGHT_PX}px`,
-          padding: `0 ${MAIN_LAYOUT_PADDING_X_PX}px`,
+          padding: `0 ${FOOTER_LAYOUT_PADDING_X_PX}px`,
         }}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-start">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -136,16 +160,21 @@ export function Footer() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <span>
-            {tLayout("footer.copyright", {
-              year: new Date().getFullYear(),
-              appName: tCommon("title"),
-            })}
-          </span>
         </div>
 
-        <span>{tLayout("footer.placeholder")}</span>
+        <div className="flex items-center justify-center">
+          <TaskbarAppList />
+        </div>
+
+        <div
+          className="flex items-center justify-end gap-2"
+          aria-label={tWorkspace("taskbar.clockLabel")}
+        >
+          <Clock3 className="h-4 w-4" />
+          <span className="min-w-12 text-right font-medium text-foreground">
+            {timeFormatter.format(now)}
+          </span>
+        </div>
       </div>
     </footer>
   );

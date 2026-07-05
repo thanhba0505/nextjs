@@ -6,6 +6,7 @@ import type { Locale } from "@/constants/locales";
 import { AuthBootstrap } from "@/providers/auth-bootstrap";
 import { IntlProvider } from "@/providers/intl-provider";
 import { QueryProvider } from "@/providers/query-provider";
+import { WorkspaceAppsBootstrap } from "@/providers/workspace-apps-bootstrap";
 import { useLocaleStore } from "@/store/locale.store";
 
 export function AppProviders({
@@ -25,7 +26,9 @@ export function AppProviders({
     <QueryProvider>
       <IntlProvider locale={initialLocale}>
         <AuthBootstrap>
-          <AppShell>{children}</AppShell>
+          <WorkspaceAppsBootstrap>
+            <AppShell>{children}</AppShell>
+          </WorkspaceAppsBootstrap>
         </AuthBootstrap>
       </IntlProvider>
     </QueryProvider>

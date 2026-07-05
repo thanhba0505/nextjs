@@ -1,7 +1,8 @@
 {
   "common": {
     "title": "Next Frontend",
-    "close": "Đóng"
+    "close": "Đóng",
+    "loading": "Đang tải..."
   },
   "layout": {
     "footer": {
@@ -45,6 +46,34 @@
     "dashboard": {
       "title": "Dashboard",
       "description": "Đây là trang protected placeholder. Chưa triển khai CRUD hay business pages."
+    }
+  },
+  "workspace": {
+    "menu": {
+      "pinTaskbar": "Ghim vào taskbar",
+      "unpinDesktop": "Bỏ khỏi desktop",
+      "pinDesktop": "Ghim vào desktop",
+      "unpinTaskbar": "Bỏ khỏi taskbar"
+    },
+    "desktop": {
+      "surfaceLabel": "Màn hình desktop",
+      "empty": "Chưa có app nào trên desktop."
+    },
+    "taskbar": {
+      "appsLabel": "Danh sách app trên taskbar",
+      "empty": "Chưa có app nào trên taskbar.",
+      "clockLabel": "Đồng hồ hệ thống"
+    },
+    "toast": {
+      "loadAppsFailed": "Không thể tải danh sách app.",
+      "pinTaskbarFailed": "Không thể ghim app vào taskbar.",
+      "unpinDesktopFailed": "Không thể bỏ app khỏi desktop.",
+      "pinDesktopFailed": "Không thể ghim app vào desktop.",
+      "unpinTaskbarFailed": "Không thể bỏ app khỏi taskbar.",
+      "moveDesktopFailed": "Không thể cập nhật vị trí app trên desktop.",
+      "moveTaskbarFailed": "Không thể cập nhật vị trí app trên taskbar.",
+      "syncPositionsFailed": "Không thể đồng bộ vị trí app lên máy chủ.",
+      "syncPositionsSuccess": "Đã lưu vị trí app thành công."
     }
   }
 }

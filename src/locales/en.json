@@ -1,7 +1,8 @@
 {
   "common": {
     "title": "Next Frontend",
-    "close": "Close"
+    "close": "Close",
+    "loading": "Loading..."
   },
   "layout": {
     "footer": {
@@ -45,6 +46,34 @@
     "dashboard": {
       "title": "Dashboard",
       "description": "Protected placeholder page. CRUD/business pages are not implemented yet."
+    }
+  },
+  "workspace": {
+    "menu": {
+      "pinTaskbar": "Pin to taskbar",
+      "unpinDesktop": "Unpin from desktop",
+      "pinDesktop": "Pin to desktop",
+      "unpinTaskbar": "Unpin from taskbar"
+    },
+    "desktop": {
+      "surfaceLabel": "Desktop surface",
+      "empty": "No desktop apps yet."
+    },
+    "taskbar": {
+      "appsLabel": "Taskbar app list",
+      "empty": "No taskbar apps yet.",
+      "clockLabel": "System clock"
+    },
+    "toast": {
+      "loadAppsFailed": "Unable to load apps.",
+      "pinTaskbarFailed": "Unable to pin the app to the taskbar.",
+      "unpinDesktopFailed": "Unable to unpin the app from the desktop.",
+      "pinDesktopFailed": "Unable to pin the app to the desktop.",
+      "unpinTaskbarFailed": "Unable to unpin the app from the taskbar.",
+      "moveDesktopFailed": "Unable to update the desktop position.",
+      "moveTaskbarFailed": "Unable to update the taskbar position.",
+      "syncPositionsFailed": "Unable to sync app positions to the server.",
+      "syncPositionsSuccess": "App positions saved successfully."
     }
   }
 }

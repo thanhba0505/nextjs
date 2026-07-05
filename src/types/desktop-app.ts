@@ -3,8 +3,7 @@ import type { AppItem } from "@/types/app";
 export interface DesktopAppItem {
   id: number;
   app: AppItem;
-  grid_x: number;
-  grid_y: number;
+  position: number;
 }
 
 export interface ListDesktopAppsResponseData {
@@ -14,8 +13,7 @@ export interface ListDesktopAppsResponseData {
 export interface PinDesktopAppRequest {
   desktop_app: {
     app_id: number;
-    grid_x: number;
-    grid_y: number;
+    position: number;
   };
 }
 
@@ -25,8 +23,7 @@ export interface PinDesktopAppResponseData {
 
 export interface UpdateDesktopAppPositionRequest {
   desktop_app: {
-    grid_x: number;
-    grid_y: number;
+    position: number;
   };
 }
 
@@ -37,8 +34,7 @@ export interface UpdateDesktopAppPositionResponseData {
 export interface UpdateDesktopAppsPositionsRequest {
   desktop_apps: Array<{
     app_id: number;
-    grid_x: number;
-    grid_y: number;
+    position: number;
   }>;
 }
 
