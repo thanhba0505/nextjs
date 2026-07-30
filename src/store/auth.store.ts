@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { AuthService } from "@/services/auth.service";
 import type { LoginRequest } from "@/types/auth";
-import type { Permission, Role, User } from "@/types/user";
+import type { User } from "@/types/user";
 import {
   clearAuthCookies,
   getRefreshToken,
@@ -11,28 +11,17 @@ import {
 
 interface AuthState {
   user: User | null;
-  roles: Role[];
-  permissions: Permission[];
   isAuthenticated: boolean;
   loading: boolean;
   login: (payload: LoginRequest) => Promise<void>;
   logout: () => Promise<void>;
   fetchMe: () => Promise<void>;
-  setUser: (payload: {
-    user: User;
-    roles: Role[];
-    permissions: Permission[];
-  }) => void;
+  setUser: (payload: { user: User }) => void;
   clear: () => void;
 }
 
-const initialState: Pick<
-  AuthState,
-  "user" | "roles" | "permissions" | "isAuthenticated" | "loading"
-> = {
+const initialState: Pick<AuthState, "user" | "isAuthenticated" | "loading"> = {
   user: null,
-  roles: [],
-  permissions: [],
   isAuthenticated: false,
   loading: false,
 };
@@ -40,11 +29,9 @@ const initialState: Pick<
 export const useAuthStore = create<AuthState>((set, get) => ({
   ...initialState,
 
-  setUser: ({ user, roles, permissions }) =>
+  setUser: ({ user }) =>
     set({
       user,
-      roles,
-      permissions,
       isAuthenticated: true,
     }),
 
@@ -56,12 +43,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       const res = await AuthService.me();
       if (!res.success) throw new Error(res.message);
       const currentUser = res.data.user;
-      const { roles, permissions, ...user } = currentUser;
-      get().setUser({
-        user,
-        roles: roles ?? [],
-        permissions: permissions ?? [],
-      });
+      get().setUser({ user: currentUser });
     } finally {
       set({ loading: false });
     }
