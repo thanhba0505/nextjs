@@ -1572,10 +1572,10 @@
   resolved "https://registry.yarnpkg.com/@sec-ant/readable-stream/-/readable-stream-0.4.1.tgz#60de891bb126abfdc5410fdc6166aca065f10a0c"
   integrity sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==
 
-"@shadcn/registry@0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@shadcn/registry/-/registry-0.1.1.tgz#5eca82955e7fb926a16f86f24ff5bd240098449f"
-  integrity sha512-2StvkWtNuzWfAArbUL182FqFg1KYX7d/Pa0h+bdUgBOdIGXp2+6JMPi+zvJ4FgoGFxubcxwbKFmfIVeY44dpEw==
+"@shadcn/registry@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@shadcn/registry/-/registry-0.1.2.tgz#48359bdf01ed2d4ed1e5d37d2582c888ec12fb2a"
+  integrity sha512-yN+z+I9lBPI0b5DOr5IwrC4E1kkoSMkdO3M6pNALz07c0if9zFE/cH+Ekfp7AT93FBN0d49rSiVyKwqIAsrEsg==
   dependencies:
     "@babel/core" "^7.28.0"
     "@babel/parser" "^7.28.0"
@@ -5286,10 +5286,10 @@ setprototypeof@~1.2.0:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
-shadcn@^4.21.2:
-  version "4.21.2"
-  resolved "https://registry.yarnpkg.com/shadcn/-/shadcn-4.21.2.tgz#56f9a21e99b1b25760c73e853b50a67e6ee9e2cb"
-  integrity sha512-hVjBCjAqA1frsNoWC1731LHYn+gitC48EuDK8K48pUMjD0RnxoIwx7u4D7akdMNhyUkYjdVm3962vS2pgChAOQ==
+shadcn@^4.21.3:
+  version "4.21.3"
+  resolved "https://registry.yarnpkg.com/shadcn/-/shadcn-4.21.3.tgz#652a537fbe7ac40829ea53395341633bac33bea2"
+  integrity sha512-r88yKaFvIwz2DInrE/DZn0XZVSuKWahouQVJBjYxVAcZ3GRkfh+3VDhIeCc18eYiIOuMgZoGaPYjhzhaON2mzw==
   dependencies:
     "@babel/core" "^7.28.0"
     "@babel/parser" "^7.28.0"
@@ -5297,7 +5297,7 @@ shadcn@^4.21.2:
     "@babel/preset-typescript" "^7.27.1"
     "@dotenvx/dotenvx" "^1.48.4"
     "@modelcontextprotocol/sdk" "^1.26.0"
-    "@shadcn/registry" "0.1.1"
+    "@shadcn/registry" "0.1.2"
     "@types/validate-npm-package-name" "^4.0.2"
     browserslist "^4.26.2"
     cn "^0.2.4"
